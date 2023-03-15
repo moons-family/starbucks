@@ -18,11 +18,13 @@ public class MemberAPIController {
 
     private final MemberService memberService;
 
+    /**
+     * TODO 임시로 테스트 하는 주석
+     * @param request
+     */
     @PostMapping("join")
     public void joinMember(@RequestBody @Valid MemberDTO request) {
-
         Member member = createMember(request);
-
         memberService.join(member);
     }
 
