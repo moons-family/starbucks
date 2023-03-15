@@ -17,12 +17,10 @@ import javax.validation.Valid;
 public class MemberAPIController {
 
     private final MemberService memberService;
-
+    
     @PostMapping("join")
     public void joinMember(@RequestBody @Valid MemberDTO request) {
-
         Member member = createMember(request);
-
         memberService.join(member);
     }
 
