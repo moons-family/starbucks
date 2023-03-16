@@ -1,6 +1,7 @@
 package com.mooninho.starbucks.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -22,9 +24,6 @@ public class Member {
 
     private String name;
     private String phone;
-
-    public Member() {
-    }
 
     public Member(String loginId, String password, String name, String phone) {
         this.email = loginId;
