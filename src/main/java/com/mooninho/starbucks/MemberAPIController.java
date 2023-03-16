@@ -27,11 +27,12 @@ public class MemberAPIController {
     }
 
     private static Member createMember(MemberDTO request) {
-        Member member = new Member();
-        member.setLoginId(request.getId());
-        member.setPassword(request.getPw());
-        member.setName(request.getUsername());
-        member.setPhone(request.getPhone());
+        Member member = new Member(
+                request.getId(),
+                request.getPassword(),
+                request.getUsername(),
+                request.getPhone()
+        );
         return member;
     }
 }
