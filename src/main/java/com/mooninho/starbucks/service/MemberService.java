@@ -13,9 +13,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long join(Member member) {
-
+    public void join(Member member) {
         memberRepository.save(member);
-        return member.getId();
     }
 }

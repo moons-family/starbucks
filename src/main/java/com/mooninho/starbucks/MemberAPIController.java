@@ -19,17 +19,18 @@ public class MemberAPIController {
     private final MemberService memberService;
     
     @PostMapping("join")
-    public void joinMember(@RequestBody @Valid MemberDTO request) {
-        Member member = createMember(request);
+    public void joinMember(@RequestBody @Valid MemberDTO memberDto) {
+        Member member = createMember(memberDto);
         memberService.join(member);
     }
 
-    private static Member createMember(MemberDTO request) {
-        Member member = new Member();
-        member.setLoginId(request.getId());
-        member.setPassword(request.getPw());
-        member.setName(request.getUsername());
-        member.setPhone(request.getPhone());
+    private static Member createMember(MemberDTO memberDto) {
+        Member member = new Member(
+                memberDto.getId(),
+                memberDto.getPassword(),
+                memberDto.getUsername(),
+                memberDto.getPhone()
+        );
         return member;
     }
 }
