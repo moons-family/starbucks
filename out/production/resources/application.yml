@@ -4,14 +4,20 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+    hikari:
+      maximum-pool-size: 50
 
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
+
+server:
+  error:
+    include-message: always
 
 logging.level:
   org.hibernate.SQL: debug

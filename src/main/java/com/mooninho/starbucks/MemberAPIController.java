@@ -3,13 +3,14 @@ package com.mooninho.starbucks;
 import com.mooninho.starbucks.dto.MemberJoinDTO;
 import com.mooninho.starbucks.dto.MemberLoginDTO;
 import com.mooninho.starbucks.entity.Member;
+import com.mooninho.starbucks.exception.UserException;
+import com.mooninho.starbucks.exceptionhandler.ErrorResult;
+import com.mooninho.starbucks.exceptionhandler.UserExHandler;
 import com.mooninho.starbucks.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,28 +25,26 @@ public class MemberAPIController {
     @PostMapping("/join")
     public void joinMember(@RequestBody @Valid MemberJoinDTO memberJoinDto) {
 
-        Member member = createMember(memberJoinDto);
-
-        memberService.join(member);
+        memberService.join(memberJoinDto);
     }
 
     @PostMapping("/login")
-    public String loginMember(@RequestBody @Valid MemberLoginDTO memberLoginDTO) {
+    public Long loginMember(@RequestBody @Valid MemberLoginDTO memberLoginDTO) {
 
-        Member login = memberService.login(memberLoginDTO);
-        if (login == null) {
-            log.info("로그인 실패");
+        Member member = memberService.login(memberLoginDTO);
+
+        if (member == null) {
+            throw new UserException("존재하지 않는 회원입니다.");
         }
-        return login.getEmail();
-    }
 
-    private static Member createMember(MemberJoinDTO memberJoinDto) {
-        Member member = new Member(
-                memberJoinDto.getEmail(),
-                memberJoinDto.getPassword(),
-                memberJoinDto.getName(),
-                memberJoinDto.getPhone()
-        );
-        return member;
+        if (member.getLoginCount() <= 0) {
+            throw new UserException("계정이 잠겼습니다. 고객센터에 문의해주세요.");
+        }
+
+        if (!member.getPassword().equals(memberLoginDTO.getPassword())) {
+            throw new UserException("비밀번호가 일치하지 않습니다. 남은 시도 횟수 : " + member.getLoginCount());
+        }
+
+        return member.getId();
     }
 }

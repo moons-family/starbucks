@@ -1,11 +1,12 @@
 package com.mooninho.starbucks.entity;
 
-import com.mooninho.starbucks.status.MemberStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Getter
@@ -17,23 +18,23 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(unique = true)
     private String email;
     private String password;
 
     private String name;
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    private MemberStatus memberStatus;
-
-    public Member(MemberStatus memberStatus) {
-        this.memberStatus = memberStatus;
-    }
+    private int loginCount = 5;
 
     public Member(String email, String password, String name, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phone = phone;
+    }
+
+    public int changeLoginCount(int loginCount) {
+        return this.loginCount = loginCount;
     }
 }
