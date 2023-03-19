@@ -33,18 +33,18 @@ public class MemberService {
             return null;
         }
 
-        if (member.getLoginCount() > 0 && member.getPassword().equals(memberLoginDTO.getPassword())) {
-            member.changeLoginCount(5);
+        if (member.getLoginFailCount() < 5 && member.getPassword().equals(memberLoginDTO.getPassword())) {
+            member.resetLoginFailCount();
         }
 
         if (!member.getPassword().equals(memberLoginDTO.getPassword())) {
-            member.changeLoginCount(member.getLoginCount() - 1);
+            member.loginFail();
         }
 
         return member;
     }
 
-    public static Member createMember(MemberJoinDTO memberJoinDto) {
+    public Member createMember(MemberJoinDTO memberJoinDto) {
         return new Member(
                 memberJoinDto.getEmail(),
                 memberJoinDto.getPassword(),

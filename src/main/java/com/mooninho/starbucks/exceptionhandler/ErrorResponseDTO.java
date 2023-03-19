@@ -1,5 +1,6 @@
 package com.mooninho.starbucks.exceptionhandler;
 
+import com.mooninho.starbucks.exception.code.UserErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ErrorResult {
+public class ErrorResponseDTO {
 
-    private String code;
+    private UserErrorCode code;
     private String message;
 }

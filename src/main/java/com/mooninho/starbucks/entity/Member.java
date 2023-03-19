@@ -25,7 +25,7 @@ public class Member {
     private String name;
     private String phone;
 
-    private int loginCount = 5;
+    private int loginFailCount = 0;
 
     public Member(String email, String password, String name, String phone) {
         this.email = email;
@@ -34,7 +34,11 @@ public class Member {
         this.phone = phone;
     }
 
-    public int changeLoginCount(int loginCount) {
-        return this.loginCount = loginCount;
+    public void loginFail() {
+        this.loginFailCount += 1;
+    }
+
+    public void resetLoginFailCount() {
+        this.loginFailCount = 0;
     }
 }

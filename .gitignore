@@ -1,2 +1,2 @@
-out/
-*.class
+out/production/classes/
+.class
