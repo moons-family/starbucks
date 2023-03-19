@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class UserExHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler
-    public ErrorResult userExHandler(UserException e) {
-        return new ErrorResult("USER-EX", e.getMessage());
+    public ErrorResponseDTO userExHandler(UserException e) {
+        return new ErrorResponseDTO("USER-EX", e.getMessage());
     }
 }
