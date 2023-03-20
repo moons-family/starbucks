@@ -1,2 +1,7 @@
-out/production/classes/
 .class
+.bin
+.DS_Store
+.gradle/*
+.gitignore.swp
+out/*
+build/*

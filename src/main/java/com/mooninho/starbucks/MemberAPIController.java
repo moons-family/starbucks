@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
@@ -26,22 +28,25 @@ public class MemberAPIController {
     }
 
     @PostMapping("/login")
-    public Long findMember(@RequestBody @Valid MemberLoginDTO memberLoginDTO) {
+    public Long findMember(@RequestBody @Valid MemberLoginDTO memberLoginDTO, HttpServletRequest request) {
 
-        Member member = memberService.login(memberLoginDTO);
+        Member loginMember = memberService.login(memberLoginDTO);
 
-        if (member == null) {
+        if (loginMember == null) {
             throw new UserException("존재하지 않는 회원입니다.");
         }
 
-        if (member.getLoginFailCount() >= 5) {
+        if (loginMember.getLoginFailCount() >= 5) {
             throw new UserException("계정이 잠겼습니다. 고객센터에 문의해주세요.");
         }
 
-        if (!member.getPassword().equals(memberLoginDTO.getPassword())) {
-            throw new UserException("비밀번호가 일치하지 않습니다. 현재 시도 횟수 : ( " + member.getLoginFailCount() + " / 5 )");
+        if (!loginMember.getPassword().equals(memberLoginDTO.getPassword())) {
+            throw new UserException("비밀번호가 일치하지 않습니다. 현재 시도 횟수 : ( " + loginMember.getLoginFailCount() + " / 5 )");
         }
 
-        return member.getId();
+        HttpSession session = request.getSession();
+        session.setAttribute("loginMember", loginMember);
+
+        return loginMember.getId();
     }
 }
