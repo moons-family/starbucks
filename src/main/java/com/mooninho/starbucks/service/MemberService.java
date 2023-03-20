@@ -27,7 +27,7 @@ public class MemberService {
     }
 
     @Transactional
-    public Member login(MemberLoginDTO memberLoginDTO) {
+    public Member findMember(MemberLoginDTO memberLoginDTO) {
 
         Member member = memberQueryRepository.findMemberByEmail(memberLoginDTO.getEmail());
 

@@ -30,7 +30,7 @@ public class MemberAPIController {
     @PostMapping("/login")
     public Long findMember(@RequestBody @Valid MemberLoginDTO memberLoginDTO, HttpServletRequest request) {
 
-        Member loginMember = memberService.login(memberLoginDTO);
+        Member loginMember = memberService.findMember(memberLoginDTO);
 
         if (loginMember == null) {
             throw new UserException("존재하지 않는 회원입니다.");
@@ -48,5 +48,15 @@ public class MemberAPIController {
         session.setAttribute("loginMember", loginMember);
 
         return loginMember.getId();
+    }
+
+    @GetMapping
+    public Member loginCheck(@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
+
+        if (loginMember == null) {
+            throw new UserException("게스트로 입장하셨습니다.");
+        }
+
+        return loginMember;
     }
 }
