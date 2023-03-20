@@ -1,5 +1,6 @@
 package com.mooninho.starbucks;
 
+import com.mooninho.starbucks.dto.MemberDto;
 import com.mooninho.starbucks.dto.MemberJoinDTO;
 import com.mooninho.starbucks.dto.MemberLoginDTO;
 import com.mooninho.starbucks.entity.Member;
@@ -45,18 +46,18 @@ public class MemberAPIController {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("loginMember", loginMember);
+        session.setAttribute("loginMember", loginMember.getId());
 
         return loginMember.getId();
     }
 
     @GetMapping
-    public Member loginCheck(@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
+    public String loginCheck(@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
 
         if (loginMember == null) {
             throw new UserException("게스트로 입장하셨습니다.");
         }
 
-        return loginMember;
+        return "회원 번호 : " + loginMember.getId();
     }
 }
