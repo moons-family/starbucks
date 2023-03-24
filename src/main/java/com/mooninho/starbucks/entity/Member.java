@@ -1,11 +1,15 @@
 package com.mooninho.starbucks.entity;
 
-import com.mooninho.starbucks.status.MemberStatus;
+import com.mooninho.starbucks.dto.MemberJoinDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Getter
@@ -17,23 +21,28 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(unique = true)
     private String email;
     private String password;
 
     private String name;
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    private MemberStatus memberStatus;
+    private int loginFailCount = 0;
 
-    public Member(MemberStatus memberStatus) {
-        this.memberStatus = memberStatus;
-    }
-
-    public Member(String email, String password, String name, String phone) {
+    @Builder
+    private Member(String email, String password, String name, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phone = phone;
+    }
+
+    public void loginFail() {
+        this.loginFailCount += 1;
+    }
+
+    public void resetLoginFailCount() {
+        this.loginFailCount = 0;
     }
 }
