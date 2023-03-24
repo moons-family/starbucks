@@ -3,7 +3,9 @@ package com.mooninho.starbucks.service;
 import com.mooninho.starbucks.dto.MemberJoinDTO;
 import com.mooninho.starbucks.dto.MemberLoginDTO;
 import com.mooninho.starbucks.entity.Member;
-import com.mooninho.starbucks.repository.MemberJpaRepository;
+import com.mooninho.starbucks.entity.DeleteMemberInfo;
+import com.mooninho.starbucks.repository.MemberDeleteInfoRepository;
+import com.mooninho.starbucks.repository.MemberRepository;
 import com.mooninho.starbucks.repository.MemberQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberJpaRepository memberRepository;
+    private final MemberRepository memberRepository;
     private final MemberQueryRepository memberQueryRepository;
+    private final MemberDeleteInfoRepository memberDeleteInfoRepository;
 
     @Transactional
     public void join(MemberJoinDTO memberJoinDTO) {
@@ -46,4 +49,16 @@ public class MemberService {
         return member;
     }
 
+    @Transactional
+    public DeleteMemberInfo deleteMember(Long id, String reason) {
+
+        DeleteMemberInfo deleteMemberInfo = DeleteMemberInfo.builder()
+                .userId(id)
+                .reason(reason)
+                .build();
+
+        memberDeleteInfoRepository.save(deleteMemberInfo);
+
+        return null;
+    }
 }

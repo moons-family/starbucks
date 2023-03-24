@@ -1,10 +1,7 @@
 package com.mooninho.starbucks.dto;
 
 import com.mooninho.starbucks.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

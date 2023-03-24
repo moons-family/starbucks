@@ -6,18 +6,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@SequenceGenerator(name = "member_seq_gen", sequenceName = "member_seq")
 public class Member {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "member_seq_gen")
     @Column(name = "member_id")
     private Long id;
 
