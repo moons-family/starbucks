@@ -69,7 +69,7 @@ public class MemberAPIController {
             @SessionAttribute(name = "memberInfo", required = false) MemberDTO memberInfo,
             @RequestBody @Valid DeleteMemberInfo deleteMemberInfo
     ) {
-        DeleteMemberInfo deleteMember = memberService.deleteMember(memberInfo.getId(), deleteMemberInfo.getReason());
+        memberService.deleteMember(memberInfo.getId(), deleteMemberInfo.getReason());
 
         return "탈퇴 처리되었습니다.";
     }
