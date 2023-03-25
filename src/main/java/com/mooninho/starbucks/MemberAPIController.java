@@ -1,8 +1,9 @@
 package com.mooninho.starbucks;
 
-import com.mooninho.starbucks.dto.MemberDto;
+import com.mooninho.starbucks.dto.MemberDTO;
 import com.mooninho.starbucks.dto.MemberJoinDTO;
 import com.mooninho.starbucks.dto.MemberLoginDTO;
+import com.mooninho.starbucks.entity.DeleteMemberInfo;
 import com.mooninho.starbucks.entity.Member;
 import com.mooninho.starbucks.exception.UserException;
 import com.mooninho.starbucks.service.MemberService;
@@ -45,19 +46,31 @@ public class MemberAPIController {
             throw new UserException("비밀번호가 일치하지 않습니다. 현재 시도 횟수 : ( " + loginMember.getLoginFailCount() + " / 5 )");
         }
 
+        MemberDTO memberInfo = new MemberDTO(loginMember);
+
         HttpSession session = request.getSession();
-        session.setAttribute("loginMember", loginMember.getId());
+        session.setAttribute("memberInfo", memberInfo);
 
         return loginMember.getId();
     }
 
     @GetMapping
-    public String loginCheck(@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
+    public String loginCheck(@SessionAttribute(name = "memberInfo", required = false) MemberDTO memberInfo) {
 
-        if (loginMember == null) {
-            throw new UserException("게스트로 입장하셨습니다.");
+        if (memberInfo == null) {
+            return "게스트로 입장하셨습니다.";
         }
 
-        return "회원 번호 : " + loginMember.getId();
+        return memberInfo.getName() + "님 환영합니다!";
+    }
+
+    @PostMapping("/delete")
+    public String deleteMember(
+            @SessionAttribute(name = "memberInfo", required = false) MemberDTO memberInfo,
+            @RequestBody @Valid DeleteMemberInfo deleteMemberInfo
+    ) {
+        memberService.deleteMember(memberInfo.getId(), deleteMemberInfo.getReason());
+
+        return "탈퇴 처리되었습니다.";
     }
 }

@@ -1,6 +1,6 @@
 package com.mooninho.starbucks.repository;
 
-import com.mooninho.starbucks.dto.MemberLoginDTO;
+import com.mooninho.starbucks.entity.DeleteMemberInfo;
 import com.mooninho.starbucks.entity.Member;
 import com.mooninho.starbucks.entity.QMember;
 import com.querydsl.jpa.impl.JPAQueryFactory;

@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -17,7 +14,7 @@ import javax.persistence.Id;
 public class Member {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -31,7 +28,7 @@ public class Member {
     private int loginFailCount = 0;
 
     @Builder
-    private Member(String email, String password, String name, String phone) {
+    public Member(String email, String password, String name, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;
