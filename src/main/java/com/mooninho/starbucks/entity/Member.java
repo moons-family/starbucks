@@ -11,11 +11,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@SequenceGenerator(name = "member_seq_gen", sequenceName = "member_seq")
 public class Member {
 
     @Id
-    @GeneratedValue(generator = "member_seq_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -29,7 +28,7 @@ public class Member {
     private int loginFailCount = 0;
 
     @Builder
-    private Member(String email, String password, String name, String phone) {
+    public Member(String email, String password, String name, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;

@@ -52,13 +52,12 @@ public class MemberService {
     @Transactional
     public DeleteMemberInfo deleteMember(Long id, String reason) {
 
-        DeleteMemberInfo deleteMemberInfo = DeleteMemberInfo.builder()
-                .userId(id)
-                .reason(reason)
-                .build();
+        DeleteMemberInfo deleteMemberInfo = new DeleteMemberInfo(id, reason);
 
         memberDeleteInfoRepository.save(deleteMemberInfo);
 
         return null;
     }
+
+
 }
