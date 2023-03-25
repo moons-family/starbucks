@@ -26,7 +26,7 @@ public class MemberService {
     @Transactional
     public void join(MemberJoinDTO memberJoinDTO) {
 
-        Member member = Member.createMember(memberJoinDTO);
+        Member member = MemberJoinDTO.createMember(memberJoinDTO);
 
         memberRepository.save(member);
     }

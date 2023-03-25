@@ -23,4 +23,14 @@ public class MemberJoinDTO {
 
     private String phone;
 
+    public static Member createMember(MemberJoinDTO memberJoinDTO) {
+        Member member = Member.builder()
+                .email(memberJoinDTO.getEmail())
+                .password(memberJoinDTO.getPassword())
+                .name(memberJoinDTO.getName())
+                .phone(memberJoinDTO.getPhone())
+                .build();
+
+        return member;
+    }
 }

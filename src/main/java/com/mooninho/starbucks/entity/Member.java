@@ -26,15 +26,12 @@ public class Member {
 
     private int loginFailCount = 0;
 
-    private Member(MemberJoinDTO memberJoinDTO) {
-        this.email = memberJoinDTO.getEmail();
-        this.password = memberJoinDTO.getPassword();
-        this.name = memberJoinDTO.getName();
-        this.phone = memberJoinDTO.getPhone();
-    }
-
-    public static Member createMember(MemberJoinDTO memberJoinDTO) {
-        return new Member(memberJoinDTO);
+    @Builder
+    private Member(String email, String password, String name, String phone) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.phone = phone;
     }
 
     public void loginFail() {
