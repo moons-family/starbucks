@@ -12,7 +12,7 @@ public class UserExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler
     public ErrorResponseDTO memberException(UserException e) {
-        return new ErrorResponseDTO(UserErrorCode.LOGIN_ERROR, e.getMessage());
+        return new ErrorResponseDTO(UserErrorCode.USER_ERROR, e.getMessage());
     }
 
 

@@ -19,8 +19,13 @@ public class DeleteMemberInfo {
     @NotBlank(message = "탈퇴사유를 입력해주세요.")
     private String reason;
 
-    public DeleteMemberInfo(Long memberId, String reason) {
+    private DeleteMemberInfo(Long memberId, String reason) {
         this.memberId = memberId;
         this.reason = reason;
+    }
+
+    public static DeleteMemberInfo createDeletedMemberInfo(Long memberId, String reason) {
+
+        return new DeleteMemberInfo(memberId, reason);
     }
 }

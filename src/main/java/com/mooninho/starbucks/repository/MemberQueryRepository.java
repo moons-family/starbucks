@@ -28,4 +28,12 @@ public class MemberQueryRepository {
                 .where(member.email.eq(email))
                 .fetchOne();
     }
+
+    public void deleteMember(Long id) {
+
+        queryFactory
+                .delete(new QMember(member))
+                .where(member.id.eq(id))
+                .execute();
+    }
 }
