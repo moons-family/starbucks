@@ -1,7 +1,6 @@
 package com.mooninho.starbucks.entity;
 
 import com.mooninho.starbucks.dto.MemberJoinDTO;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +27,7 @@ public class Member {
     private int loginFailCount = 0;
 
     @Builder
-    public Member(String email, String password, String name, String phone) {
+    private Member(String email, String password, String name, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;

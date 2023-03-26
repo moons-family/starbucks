@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -50,14 +52,14 @@ public class MemberService {
     }
 
     @Transactional
-    public DeleteMemberInfo deleteMember(Long id, String reason) {
+    public DeleteMemberInfo deleteMember(Long id, String reason, HttpSession session) {
 
-        DeleteMemberInfo deleteMemberInfo = new DeleteMemberInfo(id, reason);
-
+        DeleteMemberInfo deleteMemberInfo = DeleteMemberInfo.createDeletedMemberInfo(id, reason);
         memberDeleteInfoRepository.save(deleteMemberInfo);
 
-        return null;
+        memberQueryRepository.deleteMember(id);
+        session.invalidate();
+
+        return deleteMemberInfo;
     }
-
-
 }

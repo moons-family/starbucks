@@ -23,9 +23,17 @@ public class MemberQueryRepository {
     public Member findMemberByEmail(String email) {
 
         return queryFactory
-                .select(new QMember(member))
+                .select(member)
                 .from(member)
                 .where(member.email.eq(email))
                 .fetchOne();
+    }
+
+    public void deleteMember(Long id) {
+
+        queryFactory
+                .delete(member)
+                .where(member.id.eq(id))
+                .execute();
     }
 }

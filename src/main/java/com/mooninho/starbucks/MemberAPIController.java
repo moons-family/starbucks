@@ -67,10 +67,17 @@ public class MemberAPIController {
     @PostMapping("/delete")
     public String deleteMember(
             @SessionAttribute(name = "memberInfo", required = false) MemberDTO memberInfo,
-            @RequestBody @Valid DeleteMemberInfo deleteMemberInfo
+            @RequestBody @Valid DeleteMemberInfo deleteMemberInfo,
+            HttpSession session
     ) {
-        memberService.deleteMember(memberInfo.getId(), deleteMemberInfo.getReason());
+        if(memberInfo == null) {
+            throw new UserException("회원정보가 존재하지 않습니다.");
+        }
 
-        return "탈퇴 처리되었습니다.";
+        DeleteMemberInfo deletedMember =
+                memberService.deleteMember(memberInfo.getId(), deleteMemberInfo.getReason(), session);
+
+        return "탈퇴 처리되었습니다. 회원 번호 : " + deletedMember.getMemberId()
+                + " / 탈퇴 사유 : " + deletedMember.getReason();
     }
 }

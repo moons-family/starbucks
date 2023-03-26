@@ -30,6 +30,7 @@ public class MemberJoinDTO {
                 .name(memberJoinDTO.getName())
                 .phone(memberJoinDTO.getPhone())
                 .build();
+
         return member;
     }
 }
