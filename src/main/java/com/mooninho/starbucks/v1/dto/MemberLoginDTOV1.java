@@ -1,11 +1,11 @@
-package com.mooninho.starbucks.dto;
+package com.mooninho.starbucks.v1.dto;
 
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
-public class MemberLoginDTO {
+public class MemberLoginDTOV1 {
 
     @NotBlank(message = "아이디를 입력하세요")
     private String email;

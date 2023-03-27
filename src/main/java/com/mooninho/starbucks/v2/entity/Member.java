@@ -1,7 +1,6 @@
-package com.mooninho.starbucks.entity;
+package com.mooninho.starbucks.v2.entity;
 
-import com.mooninho.starbucks.dto.MemberJoinDTO;
-import lombok.Builder;
+import com.mooninho.starbucks.v2.dto.MemberJoinDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,9 +23,6 @@ public class Member {
     private String name;
     private String phone;
 
-    private int loginFailCount = 0;
-
-    @Builder
     private Member(String email, String password, String name, String phone) {
         this.email = email;
         this.password = password;
@@ -34,11 +30,13 @@ public class Member {
         this.phone = phone;
     }
 
-    public void loginFail() {
-        this.loginFailCount += 1;
-    }
+    public static Member createMember(MemberJoinDto memberJoinDto) {
 
-    public void resetLoginFailCount() {
-        this.loginFailCount = 0;
+        return new Member(
+                memberJoinDto.getEmail()
+                , memberJoinDto.getPassword()
+                , memberJoinDto.getName()
+                , memberJoinDto.getPhone()
+        );
     }
 }

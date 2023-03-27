@@ -1,4 +1,4 @@
-package com.mooninho.starbucks.exception;
+package com.mooninho.starbucks.v2.exception;
 
 public class UserException extends RuntimeException {
 

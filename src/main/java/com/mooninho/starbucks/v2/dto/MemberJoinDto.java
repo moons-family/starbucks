@@ -1,13 +1,16 @@
-package com.mooninho.starbucks.dto;
+package com.mooninho.starbucks.v2.dto;
 
-import com.mooninho.starbucks.entity.Member;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Getter
-public class MemberJoinDTO {
+@Setter
+@NoArgsConstructor
+public class MemberJoinDto {
 
     @NotBlank(message = "아이디를 입력하세요.")
     @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$",
@@ -22,15 +25,4 @@ public class MemberJoinDTO {
     private String name;
 
     private String phone;
-
-    public static Member createMember(MemberJoinDTO memberJoinDTO) {
-        Member member = Member.builder()
-                .email(memberJoinDTO.getEmail())
-                .password(memberJoinDTO.getPassword())
-                .name(memberJoinDTO.getName())
-                .phone(memberJoinDTO.getPhone())
-                .build();
-
-        return member;
-    }
 }
