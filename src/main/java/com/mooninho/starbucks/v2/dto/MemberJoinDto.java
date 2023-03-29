@@ -25,4 +25,13 @@ public class MemberJoinDto {
     private String name;
 
     private String phone;
+
+    private MemberJoinDto(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public static MemberJoinDto setMemberInfo(String email, String password) {
+        return new MemberJoinDto(email, password);
+    }
 }
