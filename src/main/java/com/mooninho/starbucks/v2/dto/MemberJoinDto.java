@@ -1,37 +1,36 @@
 package com.mooninho.starbucks.v2.dto;
 
+import com.mooninho.starbucks.v2.domain.Email;
+import com.mooninho.starbucks.v2.domain.Name;
+import com.mooninho.starbucks.v2.domain.Password;
+import com.mooninho.starbucks.v2.domain.Phone;
+import com.mooninho.starbucks.v2.exception.UserException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class MemberJoinDto {
 
-    @NotBlank(message = "아이디를 입력하세요.")
-    @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$",
-            message = "이메일 형식이 올바르지 않습니다.")
-    private String email;
+    private Email email;
+    private Password password;
+    private Name name;
+    private Phone phone;
 
-    @NotBlank(message = "비밀번호를 입력하세요.")
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}",
-            message = "8자 이상, 대/소문자, 숫자, 특수문자가 포함되어야 합니다.")
-    private String password;
-
-    private String name;
-
-    private String phone;
-
-    private MemberJoinDto(String email, String password) {
+    private MemberJoinDto(Email email, Password password) {
         this.email = email;
         this.password = password;
     }
 
-    public static MemberJoinDto setMemberInfo(String email, String password) {
-        return new MemberJoinDto(email, password);
+    public static MemberJoinDto setMemberInfo(MemberDto memberDto) {
+
+        if (!memberDto.getEmail().matches("^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$")) {
+            throw new UserException("이메일 형식이 올바르지 않습니다.");
+        }
+
+        if (!memberDto.getPassword().matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")) {
+            throw new UserException("8자 이상, 대/소문자, 숫자, 특수문자가 포함되어야 합니다.");
+        }
+        return new MemberJoinDto(Email.of(memberDto.getEmail()), Password.of(memberDto.getPassword()));
     }
 }
