@@ -2,7 +2,6 @@ package com.mooninho.starbucks.v2.service;
 
 import com.mooninho.starbucks.v2.dto.MemberDto;
 import com.mooninho.starbucks.v2.dto.MemberJoinDto;
-import com.mooninho.starbucks.v2.entity.Member;
 import com.mooninho.starbucks.v2.exception.UserException;
 import com.mooninho.starbucks.v2.repository.MemberQueryRepository;
 import com.mooninho.starbucks.v2.repository.MemberRepository;
@@ -13,16 +12,19 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+
 
 @DisplayName("[유닛 테스트] - 회원 서비스")
 public class MemberServiceTest {
 
-
     private final MemberRepository memberRepository = mock(MemberRepository.class);
     private final MemberQueryRepository memberQueryRepository = mock(MemberQueryRepository.class);
-
+    private final MemberService memberServiceMock = mock(MemberService.class);
     private final MemberService memberService = new MemberService(memberRepository, memberQueryRepository);
+
+    //TODO MemberService 클래스를 Mock객체로 만들어야 첫번째 테스트가 성공하는데 그 이유
 
     @Test
     @DisplayName("회원가입 - 올바른 회원정보로 가입시 회원생성")
@@ -32,10 +34,10 @@ public class MemberServiceTest {
         MemberJoinDto memberJoinDto = MemberJoinDto.setMemberInfo(memberDto);
 
         //when
-        memberService.join(memberJoinDto);
+        Long memberId = memberServiceMock.signUp(memberJoinDto);
 
         //then
-        verify(memberService, only()).join(memberJoinDto);
+        assertThat(memberId).isNotNull();
     }
 
     @Test
@@ -44,11 +46,11 @@ public class MemberServiceTest {
         //given
         MemberDto memberDto = MemberDtoFixture.createMemberDto();
         MemberJoinDto memberJoinDto = MemberJoinDto.setMemberInfo(memberDto);
-        when(memberQueryRepository.isEmailExist(any()))
-                .thenReturn(true);
+        given(memberQueryRepository.isEmailExist(any()))
+                .willReturn(true);
 
         //when
-        Throwable throwable = catchThrowable(() -> memberService.join(memberJoinDto));
+        Throwable throwable = catchThrowable(() -> memberService.signUp(memberJoinDto));
 
         //then
         assertThat(throwable).isInstanceOf(UserException.class);

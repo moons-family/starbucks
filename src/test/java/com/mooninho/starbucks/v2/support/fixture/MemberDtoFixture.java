@@ -12,6 +12,6 @@ public class MemberDtoFixture {
     }
 
     public static MemberDto createMemberDto() {
-        return createMemberDto("test@test.com", "asdf1234");
+        return createMemberDto("test@naver.com", "Test123!");
     }
 }

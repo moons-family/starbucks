@@ -4,7 +4,6 @@ import com.mooninho.starbucks.v2.domain.Email;
 import com.mooninho.starbucks.v2.domain.Name;
 import com.mooninho.starbucks.v2.domain.Password;
 import com.mooninho.starbucks.v2.domain.Phone;
-import com.mooninho.starbucks.v2.dto.MemberJoinDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,22 +35,7 @@ public class Member {
         this.phone = phone;
     }
 
-    public static Member createMember(MemberJoinDto memberJoinDto) {
-
-        return new Member(
-                memberJoinDto.getEmail(),
-                memberJoinDto.getPassword(),
-                memberJoinDto.getName(),
-                memberJoinDto.getPhone()
-        );
-    }
-
-    public static Member createMember(
-            String email,
-            String password,
-            String name,
-            String phone
-    ) {
+    public static Member createMember(String email, String password, String name, String phone) {
         return new Member(
                 Email.of(email),
                 Password.of(password),

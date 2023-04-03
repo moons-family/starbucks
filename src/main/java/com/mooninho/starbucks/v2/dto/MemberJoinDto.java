@@ -1,9 +1,6 @@
 package com.mooninho.starbucks.v2.dto;
 
-import com.mooninho.starbucks.v2.domain.Email;
-import com.mooninho.starbucks.v2.domain.Name;
-import com.mooninho.starbucks.v2.domain.Password;
-import com.mooninho.starbucks.v2.domain.Phone;
+import com.mooninho.starbucks.v2.entity.Member;
 import com.mooninho.starbucks.v2.exception.UserException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberJoinDto {
 
-    private Email email;
-    private Password password;
-    private Name name;
-    private Phone phone;
+    private String email;
+    private String password;
+    private String name;
+    private String phone;
 
-    private MemberJoinDto(Email email, Password password) {
+    private MemberJoinDto(String email, String password) {
         this.email = email;
         this.password = password;
     }
@@ -31,6 +28,10 @@ public class MemberJoinDto {
         if (!memberDto.getPassword().matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")) {
             throw new UserException("8자 이상, 대/소문자, 숫자, 특수문자가 포함되어야 합니다.");
         }
-        return new MemberJoinDto(Email.of(memberDto.getEmail()), Password.of(memberDto.getPassword()));
+        return new MemberJoinDto(memberDto.getEmail(), memberDto.getPassword());
+    }
+
+    public Member toMember() {
+        return Member.createMember(email, password, name, phone);
     }
 }

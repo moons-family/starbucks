@@ -17,16 +17,11 @@ public class MemberAPIController {
     private final MemberService memberService;
 
     @PostMapping("/join")
-    public void joinMember(@RequestBody MemberDto memberDto) {
+    public ResponseEntity<Long> signUp(@RequestBody MemberDto memberDto) {
 
         MemberJoinDto memberJoinDto = MemberJoinDto.setMemberInfo(memberDto);
+        Long memberId = memberService.signUp(memberJoinDto);
 
-        memberService.join(memberJoinDto);
-    }
-
-    @PostMapping("/sign-up")
-    public ResponseEntity<Long> signUp(@RequestBody MemberDto memberDto) {
-        Long memberId = memberService.signUp(memberDto);
         return ResponseEntity.ok(memberId);
     }
 }
