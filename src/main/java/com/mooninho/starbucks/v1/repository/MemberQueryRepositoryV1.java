@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 
 import static com.mooninho.starbucks.v1.entity.QMemberV1.memberV1;
 
-
 @Repository
 
 public class MemberQueryRepositoryV1 {

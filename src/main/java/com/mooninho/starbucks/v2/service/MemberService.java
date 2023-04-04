@@ -1,6 +1,6 @@
 package com.mooninho.starbucks.v2.service;
 
-import com.mooninho.starbucks.v2.dto.MemberJoinDto;
+import com.mooninho.starbucks.v2.dto.MemberDto;
 import com.mooninho.starbucks.v2.entity.Member;
 import com.mooninho.starbucks.v2.exception.UserException;
 import com.mooninho.starbucks.v2.repository.MemberQueryRepository;
@@ -17,14 +17,14 @@ public class MemberService {
     private final MemberQueryRepository memberQueryRepository;
 
     @Transactional
-    public Long signUp(MemberJoinDto memberJoinDto) {
+    public Long signUp(MemberDto memberDto) {
 
-        Boolean emailExist = memberQueryRepository.isEmailExist(memberJoinDto.getEmail());
+        boolean emailExist = memberQueryRepository.isEmailExist(memberDto.getEmail());
         if (emailExist) {
             throw new UserException("이미 사용중인 이메일 입니다.");
         }
 
-        Member member = memberRepository.save(memberJoinDto.toMember());
+        Member member = memberRepository.save(memberDto.toMember());
 
         return member.getMemberId();
     }

@@ -39,24 +39,8 @@ public class Member {
         return new Member(
                 Email.of(email),
                 Password.of(password),
-                optionalName(name),
-                optionalPhone(phone)
+                Name.of(name),
+                Phone.of(phone)
         );
-    }
-
-    private static Phone optionalPhone(String phone) {
-        return isPhoneNullOrBlank(phone) ? null : Phone.of(phone);
-    }
-
-    private static Name optionalName(String name) {
-        return isNameNullOrBlank(name) ? null : Name.of(name);
-    }
-
-    private static boolean isPhoneNullOrBlank(String phone) {
-        return phone == null || phone.isBlank();
-    }
-
-    private static boolean isNameNullOrBlank(String name) {
-        return name == null || name.isBlank();
     }
 }
